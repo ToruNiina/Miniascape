@@ -142,3 +142,21 @@ BOOST_AUTO_TEST_CASE(zip_iterator_decrement)
     BOOST_CHECK(begin_ == end1);
     BOOST_CHECK(begin_ == end2);
 }
+
+BOOST_AUTO_TEST_CASE(zip_iterator_loop)
+{
+    std::vector<int>    veci{1, 2, 3, 4};
+    std::vector<double> vecf{1.1, 2.2, 3.3, 4.4};
+    std::vector<char>   vecc{'a', 'b', 'c', 'd'};
+
+    std::size_t index = 0;
+    for(auto zip = make_zip(veci.cbegin(), vecf.cbegin(), vecc.cbegin());
+            zip != make_zip(veci.cbegin(), vecf.cbegin(), vecc.cbegin()); ++zip)
+    {
+        BOOST_CHECK_EQUAL(*get<0>(zip), veci.at(index));
+        BOOST_CHECK_EQUAL(*get<1>(zip), vecf.at(index));
+        BOOST_CHECK_EQUAL(*get<2>(zip), vecc.at(index));
+        ++index;
+    }
+    BOOST_CHECK_EQUAL(index, 4);
+}
