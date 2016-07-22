@@ -7,9 +7,9 @@
 #include <boost/test/included/unit_test.hpp>
 #endif
 
-#define MINIASPACE_TESTING
+#define MINIASCAPE_TESTING
 #include "zip_iterator.hpp"
-#undef MINIASPACE_TESTING
+#undef MINIASCAPE_TESTING
 
 #include <vector>
 using namespace miniascape;
