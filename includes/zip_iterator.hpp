@@ -93,13 +93,13 @@ struct decrement_impl
     static std::tuple<T_args...>& retrace_front(std::tuple<T_args...>& iters)
     {
         --(std::get<i-1>(iters));
-        return increment_impl<i-1, T_args...>::advance_front(iters);
+        return decrement_impl<i-1, T_args...>::retrace_front(iters);
     }
 
     static std::tuple<T_args...>& retrace_back(std::tuple<T_args...>& iters)
     {
         (std::get<i-1>(iters))--;
-        return increment_impl<i-1, T_args...>::advance_back(iters);
+        return decrement_impl<i-1, T_args...>::retrace_back(iters);
     }
 };
 
@@ -141,7 +141,7 @@ template<typename ... T_args>
 inline typename zip_iterator<T_args...>::self_type&
 zip_iterator<T_args...>::operator--()
 {
-    this->iters_ = detail::increment_impl<
+    this->iters_ = detail::decrement_impl<
         sizeof...(T_args), T_args...>::retrace_back(iters_);
     return *this;
 }
@@ -150,7 +150,7 @@ template<typename ... T_args>
 inline typename zip_iterator<T_args...>::self_type&
 zip_iterator<T_args...>::operator--(int)
 {
-    this->iters_ = detail::increment_impl<
+    this->iters_ = detail::decrement_impl<
         sizeof...(T_args), T_args...>::retrace_front(iters_);
     return *this;
 }
