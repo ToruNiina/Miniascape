@@ -7,9 +7,9 @@
 #include <boost/test/included/unit_test.hpp>
 #endif
 
-#define private public
+#define MINIASPACE_TESTING
 #include "zip_iterator.hpp"
-#undef private 
+#undef MINIASPACE_TESTING
 
 #include <vector>
 using namespace miniascape;
@@ -151,7 +151,7 @@ BOOST_AUTO_TEST_CASE(zip_iterator_loop)
 
     std::size_t index = 0;
     for(auto zip = make_zip(veci.cbegin(), vecf.cbegin(), vecc.cbegin());
-            zip != make_zip(veci.cbegin(), vecf.cbegin(), vecc.cbegin()); ++zip)
+            zip != make_zip(veci.cend(), vecf.cend(), vecc.cend()); ++zip)
     {
         BOOST_CHECK_EQUAL(*get<0>(zip), veci.at(index));
         BOOST_CHECK_EQUAL(*get<1>(zip), vecf.at(index));
