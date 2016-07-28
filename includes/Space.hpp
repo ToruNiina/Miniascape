@@ -20,7 +20,7 @@ class Space
 
   public:
 
-    Space(){}
+    Space() = default;
     ~Space() = default;
 
     world_type &      world()       {return world_;}
