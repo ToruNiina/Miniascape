@@ -1,13 +1,12 @@
 #ifndef MINIASCAPE_ZIP_ITERATOR
 #define MINIASCAPE_ZIP_ITERATOR
+#include <tuple>
 
 #ifdef MINIASCAPE_TESTING
-#define TESTABLE_PRIVATE public
+#define MINIASCAPE_TESTABLE_PRIVATE public
 #else
-#define TESTABLE_PRIVATE private
+#define MINIASCAPE_TESTABLE_PRIVATE private
 #endif
-
-#include <tuple>
 
 namespace miniascape
 {
@@ -18,10 +17,10 @@ class zip_iterator
   public:
     using self_type       = zip_iterator<T_args...>;
     using container_type  = std::tuple<T_args...>;
-    using container_ptr   = std::tuple<T_args...>*;
-    using container_cptr  = std::tuple<T_args...> const*;
-    using container_ref   = std::tuple<T_args...>&;
-    using container_cref  = std::tuple<T_args...> const&;
+    using container_ptr   = container_type*;
+    using container_cptr  = container_type const*;
+    using container_ref   = container_type&;
+    using container_cref  = container_type const&;
 
     explicit zip_iterator(const T_args& ... args): iters_(args...){}
     ~zip_iterator() = default;
@@ -42,10 +41,11 @@ class zip_iterator
     friend typename std::tuple_element<I, std::tuple<Types...>>::type const&
     get(const zip_iterator<Types...>& t) noexcept;
 
-  TESTABLE_PRIVATE:
+  MINIASCAPE_TESTABLE_PRIVATE:
 
-    std::tuple<T_args...> iters_;
+    container_type iters_;
 };
+#undef MINIASCAPE_TESTABLE_PRIVATE
 
 template<std::size_t I, typename... Types>
 typename std::tuple_element<I, std::tuple<Types...>>::type&
@@ -183,5 +183,4 @@ inline zip_iterator<T_args...> make_zip(const T_args& ... args)
 
 }
 
-#undef TESTABLE_PRIVATE
 #endif /* MINIASCAPE_ZIP_ITERATOR */
