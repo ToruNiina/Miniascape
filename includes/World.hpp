@@ -23,8 +23,15 @@ class World
 
   public:
 
-    World(){}
-    ~World() = default;
+    World() = default;
+    virtual ~World() = default;
+
+    template<typename... T_args>
+    void emplace(T_args&&... args)
+    {
+        container_.emplace_back(cell_ptr(
+                    new cell_type(std::forward<T_args>(args)...)));
+    }
 
     cell_ptr &      operator[](const size_type i)       {return container_[i];}
     cell_ptr const& operator[](const size_type i) const {return container_[i];}
@@ -36,7 +43,7 @@ class World
     const_iterator cbegin() const {return container_.cbegin();}
     const_iterator cend()   const {return container_.cend();}
 
-  private:
+  protected:
 
     container_type container_;
 };
