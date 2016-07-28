@@ -17,7 +17,7 @@ struct Cell
     using self_ptr = Cell<number_of_neighbors, state_type>*;
     using neighbor_container = std::array<self_ptr, number_of_neighbors>;
 
-    explicit Cell(){}
+    Cell() = default;
     virtual ~Cell() = default;
 
     state_type         state;
@@ -32,7 +32,7 @@ struct Cell<0, T_state>
     using self_type = Cell<number_of_neighbors, state_type>;
     using self_ptr = Cell<number_of_neighbors, state_type>*;
 
-    explicit Cell(){}
+    Cell() = default;
     virtual ~Cell() = default;
 
     state_type state;
@@ -47,7 +47,7 @@ struct Cell<DYNAMIC, T_state>
     using self_ptr = Cell<number_of_neighbors, state_type>*;
     using neighbor_container = std::vector<self_ptr>;
 
-    explicit Cell(){}
+    Cell() = default;
     virtual ~Cell() = default;
 
     state_type state;
