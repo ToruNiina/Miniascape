@@ -13,7 +13,6 @@ class World
 
     using traits_type    = T_traits;
     using size_type      = typename traits_type::size_type;
-    using world_type     = typename traits_type::world_type;
     using state_type     = typename traits_type::state_type;
     using cell_type      = typename traits_type::cell_type;
     using cell_ptr       = std::unique_ptr<cell_type>;
