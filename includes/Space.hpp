@@ -2,6 +2,7 @@
 #define MINIASCAPE_SPACE
 #include <vector>
 #include <memory>
+#include "World.hpp"
 
 namespace miniascape
 {
@@ -12,10 +13,10 @@ class Space
   public:
 
     using traits_type = T_traits;
-    using world_type  = typename traits_type::world_type;
     using state_type  = typename traits_type::state_type;
     using cell_type   = typename traits_type::cell_type;
     using cell_ptr    = std::unique_ptr<cell_type>;
+    using world_type  = World<traits_type>;
     using temporal_container_type = std::vector<state_type>;
 
   public:
