@@ -27,7 +27,7 @@ class Simulator
 
     virtual void initialize();
             bool step(const rule_type& rule);
-            void observe(const observer_type& obs);
+            void observe(std::ostream& os, const observer_type& obs);
     virtual void finalize();
 
   protected:
@@ -51,9 +51,9 @@ inline bool Simulator<T>::step(const rule_type& rule)
 }
 
 template<typename T>
-inline void Simulator<T>::observe(const observer_type& obs)
+inline void Simulator<T>::observe(std::ostream& os, const observer_type& obs)
 {
-    obs.observe(this->t_, this->space_);
+    obs.observe(os, this->t_, this->space_);
     return;
 }
 
