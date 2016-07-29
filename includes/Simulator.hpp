@@ -22,7 +22,7 @@ class Simulator
     using observer_type = Observer<traits_type>;
 
   public:
-    Simulator() = default;
+    explicit Simulator(const time_type t_end) : t_end_(t_end){};
     ~Simulator() = default;
 
     virtual void initialize();
