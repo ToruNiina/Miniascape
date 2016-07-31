@@ -12,7 +12,7 @@ int main()
 
     while(simu.step(rule))
     {
-        simu.observe(std::cout, obs);
+        simu.observe(obs);
     }
 
     simu.finalize();

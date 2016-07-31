@@ -30,7 +30,7 @@ struct ConwaysLifeGameTraits
     using boundary_type = PeriodicBoundary<neighbor_type>;
 };
 
-using ConwaysLifeGameObserver = Observer<ConwaysLifeGameTraits>;
+using ConwaysLifeGameObserver = DefaultObserver<ConwaysLifeGameTraits>;
 
 class ConwaysLifeGameRule : public RuleBase<ConwaysLifeGameTraits>
 {
