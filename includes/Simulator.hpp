@@ -7,7 +7,7 @@
 namespace miniascape
 {
 
-template<typename T_traits>
+template<template<typename T>class T_world, typename T_traits>
 class Simulator
 {
   public:
@@ -15,50 +15,56 @@ class Simulator
     using time_type     = typename traits_type::time_type;
     using state_type    = typename traits_type::state_type;
     using cell_type     = typename traits_type::cell_type;
-    using world_type    = World<traits_type>;
-    using space_type    = Space<traits_type>;
     using stepper_type  = Stepper<traits_type>;
     using rule_type     = RuleBase<traits_type>;
     using observer_type = Observer<traits_type>;
+    using world_base    = World<traits_type>;
+    using world_type    = T_world<traits_type>;
+
+    static_assert(std::is_base_of<world_base, world_type>::value,
+                  "invalid world type");
 
   public:
-    explicit Simulator(const time_type t_end) : t_end_(t_end){};
+    Simulator(const time_type t_end)
+        : t_(0), t_end_(t_end)
+    {}
     ~Simulator() = default;
 
     virtual void initialize();
             bool step(const rule_type& rule);
-            void observe(std::ostream& os, const observer_type& obs);
+            void observe(std::ostream& os, observer_type& obs);
     virtual void finalize();
 
   protected:
 
     time_type  t_;
     time_type  t_end_;
-    space_type space_;
+    world_type world_;
 };
 
-template<typename T>
-inline void Simulator<T>::initialize()
+template<template<typename T>class T_world, typename T_traits>
+inline void Simulator<T_world, T_traits>::initialize()
 {
     return;
 }
 
-template<typename T>
-inline bool Simulator<T>::step(const rule_type& rule)
+template<template<typename T>class T_world, typename T_traits>
+inline bool Simulator<T_world, T_traits>::step(const rule_type& rule)
 {
-    this->t_ += stepper_type::step(space_, rule);
-    return (t_ > t_end_) ? false : true;
+    this->t_ += stepper_type::step(world_, rule);
+    return (t_ >= t_end_) ? false : true;
 }
 
-template<typename T>
-inline void Simulator<T>::observe(std::ostream& os, const observer_type& obs)
+template<template<typename T>class T_world, typename T_traits>
+inline void
+Simulator<T_world, T_traits>::observe(std::ostream& os, observer_type& obs)
 {
-    obs.observe(os, this->t_, this->space_);
+    obs.observe(os, this->t_, this->world_);
     return;
 }
 
-template<typename T>
-inline void Simulator<T>::finalize()
+template<template<typename T>class T_world, typename T_traits>
+inline void Simulator<T_world, T_traits>::finalize()
 {
     return;
 }
