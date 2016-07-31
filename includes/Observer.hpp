@@ -1,6 +1,6 @@
 #ifndef MINIASCAPE_OBSERVER
 #define MINIASCAPE_OBSERVER
-#include "Space.hpp"
+#include "World.hpp"
 #include <iostream>
 
 namespace miniascape
@@ -14,22 +14,22 @@ class Observer
     using state_type  = typename traits_type::state_type;
     using cell_type   = typename traits_type::cell_type;
     using time_type   = typename traits_type::time_type;
-    using space_type  = Space<traits_type>;
+    using world_type  = World<traits_type>;
 
   public:
     Observer() = default;
     ~Observer() = default;
 
     virtual void observe(std::ostream& os, const time_type& t,
-                         const space_type& space);
+                         const world_type& space);
 };
 
 template<typename T>
-void Observer<T>::observe(std::ostream& os,
-        const time_type& t, const space_type& space)
+void Observer<T>::observe(std::ostream& os, const time_type& t,
+                          const world_type& world)
 {
     os << "time: " << t << std::endl;
-    for(auto iter = space.world().cbegin(); iter != space.world.cend(); ++iter)
+    for(auto iter = world.cbegin(); iter != world.cend(); ++iter)
     {
         os << (*iter)->state << " ";
     }
