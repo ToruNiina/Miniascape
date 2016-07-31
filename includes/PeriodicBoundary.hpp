@@ -1,7 +1,7 @@
 #ifndef MINIASCAPE_PERIODIC_BOUNDARY
 #define MINIASCAPE_PERIODIC_BOUNDARY
 #include <array>
-#include "zip_iterator.hpp"
+#include "util/zip_iterator.hpp"
 
 namespace miniascape
 {

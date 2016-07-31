@@ -2,7 +2,7 @@
 #define MINIASCAPE_STEPPER
 #include "World.hpp"
 #include "Rule.hpp"
-#include "zip_iterator.hpp"
+#include "util/zip_iterator.hpp"
 
 namespace miniascape
 {
