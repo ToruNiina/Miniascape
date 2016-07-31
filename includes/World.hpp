@@ -28,9 +28,11 @@ class World
     template<typename... T_args>
     void emplace(T_args&&... args)
     {
-        container_.emplace_back(cell_ptr(
-                    new cell_type(std::forward<T_args>(args)...)));
+        container_.emplace_back(new cell_type(std::forward<T_args>(args)...));
     }
+
+    size_type size()  const {return container_.size();}
+    bool      empty() const {return container_.empty();}
 
     cell_ptr &      operator[](const size_type i)       {return container_[i];}
     cell_ptr const& operator[](const size_type i) const {return container_[i];}
