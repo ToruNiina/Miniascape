@@ -1,6 +1,6 @@
 Miniascape
 ====
-simulator for the world that is composed of a number of cells that has own state.
+simulator of the world that is composed of a number of cells that has own state.
 
 ## build
 
