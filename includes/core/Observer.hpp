@@ -1,6 +1,6 @@
 #ifndef MINIASCAPE_OBSERVER
 #define MINIASCAPE_OBSERVER
-#include "World.hpp"
+#include "core/World.hpp"
 #include <iostream>
 
 namespace miniascape

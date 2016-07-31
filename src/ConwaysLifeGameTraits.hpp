@@ -1,11 +1,11 @@
 #ifndef MINIASCAPE_CONWAYS_LIFE_GAME_TRAITS
 #define MINIASCAPE_CONWAYS_LIFE_GAME_TRAITS
-#include "Cell.hpp"
-#include "Rule.hpp"
-#include "Observer.hpp"
-#include "NeighborhoodIndex.hpp"
-#include "PeriodicBoundary.hpp"
-#include "RandomStateGenerator.hpp"
+#include "core/Cell.hpp"
+#include "core/Rule.hpp"
+#include "core/Observer.hpp"
+#include "core/NeighborhoodIndex.hpp"
+#include "core/PeriodicBoundary.hpp"
+#include "core/RandomStateGenerator.hpp"
 #include "GraphicalObserver.hpp"
 
 namespace miniascape

@@ -1,8 +1,8 @@
 #ifndef MINIASCAPE_CONWAYS_LIFEGAME_SIMULATOR
 #define MINIASCAPE_CONWAYS_LIFEGAME_SIMULATOR
-#include "Simulator.hpp"
-#include "SquareLattice.hpp"
-#include "RandomStateGenerator.hpp"
+#include "core/Simulator.hpp"
+#include "core/SquareLattice.hpp"
+#include "core/RandomStateGenerator.hpp"
 #include "ConwaysLifeGameTraits.hpp"
 
 namespace miniascape

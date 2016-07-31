@@ -1,8 +1,8 @@
 #ifndef MINIASCAPE_SIMULATOR
 #define MINIASCAPE_SIMULATOR
-#include "Stepper.hpp"
-#include "Observer.hpp"
-#include "World.hpp"
+#include "core/Stepper.hpp"
+#include "core/Observer.hpp"
+#include "core/World.hpp"
 
 namespace miniascape
 {

@@ -1,8 +1,8 @@
 #ifndef MINIASCAPE_SQUARE_LATTICE
 #define MINIASCAPE_SQUARE_LATTICE
-#include "World.hpp"
-#include "NeighborhoodIndex.hpp"
-#include "RandomStateGenerator.hpp"
+#include "core/World.hpp"
+#include "core/NeighborhoodIndex.hpp"
+#include "core/RandomStateGenerator.hpp"
 
 namespace miniascape
 {

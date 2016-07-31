@@ -8,7 +8,7 @@
 #endif
 
 #define MINIASCAPE_TESTING
-#include "zip_iterator.hpp"
+#include "util/zip_iterator.hpp"
 #undef MINIASCAPE_TESTING
 
 #include <vector>

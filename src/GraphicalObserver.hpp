@@ -1,5 +1,5 @@
-#include "Observer.hpp"
-#include "SquareLattice.hpp"
+#include "core/Observer.hpp"
+#include "core/SquareLattice.hpp"
 #include "sdl/RenderableWindow.hpp"
 
 namespace miniascape
