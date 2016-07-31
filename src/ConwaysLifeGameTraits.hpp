@@ -6,6 +6,7 @@
 #include "NeighborhoodIndex.hpp"
 #include "PeriodicBoundary.hpp"
 #include "RandomStateGenerator.hpp"
+#include "GraphicalObserver.hpp"
 
 namespace miniascape
 {
@@ -29,8 +30,6 @@ struct ConwaysLifeGameTraits
     using neighbor_type = MooreNeighborhood;
     using boundary_type = PeriodicBoundary<neighbor_type>;
 };
-
-using ConwaysLifeGameObserver = DefaultObserver<ConwaysLifeGameTraits>;
 
 class ConwaysLifeGameRule : public RuleBase<ConwaysLifeGameTraits>
 {
@@ -72,6 +71,7 @@ class RandomStateGenerator<boolean>
     std::bernoulli_distribution bn_;
 };
 
+using ConwaysLifeGameObserver = GraphicalObserver<ConwaysLifeGameTraits>;
 
 }
 

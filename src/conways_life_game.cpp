@@ -4,9 +4,9 @@ using namespace miniascape;
 
 int main()
 {
-    ConwaysLifeGameSimulator simu(100, 100, 100);
+    ConwaysLifeGameSimulator simu(1000, 100, 100);
     ConwaysLifeGameRule rule;
-    ConwaysLifeGameObserver obs;
+    ConwaysLifeGameObserver obs(100, 100);
 
     simu.initialize();
 
