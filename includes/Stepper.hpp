@@ -27,11 +27,11 @@ Stepper<T_traits>::step(space_type& space, const rule_type& rule)
 {
     for(auto cell = make_zip(space.world().cbegin(),space.temp().begin());
             cell != make_zip(space.world().cend(),  space.temp().end()); ++cell)
-        **get<1>(cell) = rule.step(**get<0>(cell));
+        *get<1>(cell) = rule.step(**get<0>(cell));
 
     for(auto cell = make_zip(space.world().begin(), space.temp().begin());
             cell != make_zip(space.world().end(),   space.temp().end()); ++cell)
-        (*get<0>(cell))->state = std::move(**get<1>(cell));
+        (*get<0>(cell))->state = *get<1>(cell);
 
     return rule.delta_t();
 }
