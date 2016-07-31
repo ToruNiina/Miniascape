@@ -15,7 +15,7 @@ simulator for the world that is composed of a number of cells that has own state
 ## dependency
 
 Testing codes depend on Boost.unittest framework.
-Graphics part (not implemented yet) depends on SDL.
+Graphics part depends on SDL.
 Please install these library beforehand.
 
 ## Licensing Terms
