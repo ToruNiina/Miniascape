@@ -18,7 +18,7 @@ class Observer
 
   public:
     Observer() = default;
-    ~Observer() = default;
+    virtual ~Observer() = default;
 
     virtual void observe(const time_type& t, const world_type& space) = 0;
 };
