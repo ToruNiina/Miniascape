@@ -71,7 +71,7 @@ class RandomStateGenerator<boolean>
     std::bernoulli_distribution bn_;
 };
 
-using ConwaysLifeGameObserver = GraphicalObserver<ConwaysLifeGameTraits>;
+using ConwaysLifeGameObserver = ConwaysLifeGameVisualizer<ConwaysLifeGameTraits>;
 
 }
 
