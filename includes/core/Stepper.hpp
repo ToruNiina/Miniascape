@@ -8,7 +8,7 @@ namespace miniascape
 {
 
 template<typename T_traits>
-class Stepper
+class SynchronousStepper
 {
   public:
     using traits_type = T_traits;
@@ -18,12 +18,14 @@ class Stepper
     using rule_type   = RuleBase<traits_type>;
     using world_type  = World<traits_type>;
 
-    static time_type step(world_type& world, const rule_type& rule);
+    SynchronousStepper() = default;
+   ~SynchronousStepper() = default;
+    time_type step(world_type& world, const rule_type& rule) const;
 };
 
 template<typename T_traits>
-typename Stepper<T_traits>::time_type
-Stepper<T_traits>::step(world_type& world, const rule_type& rule)
+typename SynchronousStepper<T_traits>::time_type
+SynchronousStepper<T_traits>::step(world_type& world, const rule_type& rule) const
 {
     std::vector<state_type> temp(world.size());
 
