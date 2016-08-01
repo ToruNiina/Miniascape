@@ -29,13 +29,9 @@ struct ConwaysLifeGameTypeTraits
     using time_type     = std::size_t;
     using state_type    = boolean;
     using cell_type     = Cell<8, state_type>;
-    template<class T>
-    using world_type    = SquareLattice<T>;
     using neighbor_type = MooreNeighborhood;
     using boundary_type = PeriodicBoundary<neighbor_type>;
 };
-
-
 
 class ConwaysLifeGameRule : public RuleBase<ConwaysLifeGameTypeTraits>
 {
@@ -49,12 +45,12 @@ class ConwaysLifeGameRule : public RuleBase<ConwaysLifeGameTypeTraits>
     ConwaysLifeGameRule() = default;
     ~ConwaysLifeGameRule() override = default;
 
-    state_type step(const cell_type& cell) const override;
-    time_type  delta_t() const override {return 1;}
+    state_type step(const cell_type& cell) override;
+    time_type  delta_t() override {return 1;}
 };
 
 inline typename ConwaysLifeGameRule::state_type
-ConwaysLifeGameRule::step(const cell_type& cell) const
+ConwaysLifeGameRule::step(const cell_type& cell)
 {
     std::size_t lives = 0;
     for(auto iter = cell.neighbors.cbegin();
