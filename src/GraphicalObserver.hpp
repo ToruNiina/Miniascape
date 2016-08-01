@@ -1,12 +1,13 @@
 #include "core/Observer.hpp"
 #include "core/SquareLattice.hpp"
 #include "sdl/RenderableWindow.hpp"
+#include "sdl/System.hpp"
 
 namespace miniascape
 {
 
 template<typename T_traits>
-class GraphicalObserver : public Observer<T_traits>
+class ConwaysLifeGameVisualizer : public Observer<T_traits>
 {
   public:
     using base_type   = Observer<T_traits>;
@@ -16,19 +17,28 @@ class GraphicalObserver : public Observer<T_traits>
     using world_type  = typename base_type::world_type;
 
   public:
-    GraphicalObserver(const std::size_t x, const std::size_t y)
-        : window_(x, y)
-    {}
-    ~GraphicalObserver() = default;
+    ConwaysLifeGameVisualizer(const std::size_t x, const std::size_t y)
+        : system_(SDL_INIT_VIDEO), window_(x, y)
+    {
+        const sdl::Color black{0, 0, 0, 0};
+        window_.clear(black);
+        window_.update();
+    }
+    ~ConwaysLifeGameVisualizer()
+    {
+        window_.~RenderableWindow();
+        system_.~System();
+    }
 
     void observe(const time_type& t, const world_type& world) override;
 
   private:
+    sdl::System           system_;
     sdl::RenderableWindow window_;
 };
 
 template<typename T_traits>
-void GraphicalObserver<T_traits>::observe(
+void ConwaysLifeGameVisualizer<T_traits>::observe(
         const time_type& t, const world_type& world)
 {
     const auto size = window_.size();
@@ -43,11 +53,8 @@ void GraphicalObserver<T_traits>::observe(
             window_.putpixel(pos, green);
     }
     window_.update();
+    window_.wait(std::chrono::microseconds(10));
     return;
 }
-
-
-
-
 
 }
