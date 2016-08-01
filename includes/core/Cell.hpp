@@ -11,17 +11,18 @@ constexpr static int DYNAMIC = -1;
 template<int I_neighbors, typename T_state>
 struct Cell
 {
-    using state_type = T_state;
+    static_assert(I_neighbors > 0, "number of neighbors never be negative");
+    using state_type     = T_state;
     constexpr static int number_of_neighbors = I_neighbors;
-    using self_type = Cell<number_of_neighbors, state_type>;
-    using self_ptr = Cell<number_of_neighbors, state_type>*;
-    using neighbor_container = std::array<self_ptr, number_of_neighbors>;
+    using self_type      = Cell<number_of_neighbors, state_type>;
+    using self_ptr       = self_type*;
+    using neighbors_type = std::array<self_ptr, number_of_neighbors>;
 
     Cell() = default;
     virtual ~Cell() = default;
 
-    state_type         state;
-    neighbor_container neighbors;
+    state_type     state;
+    neighbors_type neighbors;
 };
 
 template<typename T_state>
@@ -29,8 +30,8 @@ struct Cell<0, T_state>
 {
     using state_type = T_state;
     constexpr static int number_of_neighbors = 0;
-    using self_type = Cell<number_of_neighbors, state_type>;
-    using self_ptr = Cell<number_of_neighbors, state_type>*;
+    using self_type  = Cell<number_of_neighbors, state_type>;
+    using self_ptr   = self_type*;
 
     Cell() = default;
     virtual ~Cell() = default;
@@ -43,15 +44,15 @@ struct Cell<DYNAMIC, T_state>
 {
     using state_type = T_state;
     constexpr static int number_of_neighbors = DYNAMIC;
-    using self_type = Cell<number_of_neighbors, state_type>;
-    using self_ptr = Cell<number_of_neighbors, state_type>*;
-    using neighbor_container = std::vector<self_ptr>;
+    using self_type      = Cell<number_of_neighbors, state_type>;
+    using self_ptr       = self_type*;
+    using neighbors_type = std::vector<self_ptr>;
 
     Cell() = default;
     virtual ~Cell() = default;
 
-    state_type state;
-    neighbor_container neighbors;
+    state_type     state;
+    neighbors_type neighbors;
 };
 
 }
