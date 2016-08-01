@@ -6,7 +6,7 @@
 #include "core/NeighborhoodIndex.hpp"
 #include "core/PeriodicBoundary.hpp"
 #include "core/RandomStateGenerator.hpp"
-#include "GraphicalObserver.hpp"
+#include "ConwaysLifeGameVisualizer.hpp"
 
 namespace miniascape
 {
