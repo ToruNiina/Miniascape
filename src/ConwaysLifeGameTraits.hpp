@@ -6,6 +6,8 @@
 #include "core/NeighborhoodIndex.hpp"
 #include "core/PeriodicBoundary.hpp"
 #include "core/RandomStateGenerator.hpp"
+#include "core/SquareLattice.hpp"
+#include "core/Stepper.hpp"
 #include "ConwaysLifeGameVisualizer.hpp"
 
 namespace miniascape
@@ -21,20 +23,24 @@ struct boolean
     operator bool const&() const {return val;}
 };
 
-struct ConwaysLifeGameTraits
+struct ConwaysLifeGameTypeTraits
 {
     using size_type     = std::size_t;
     using time_type     = std::size_t;
     using state_type    = boolean;
     using cell_type     = Cell<8, state_type>;
+    template<class T>
+    using world_type    = SquareLattice<T>;
     using neighbor_type = MooreNeighborhood;
     using boundary_type = PeriodicBoundary<neighbor_type>;
 };
 
-class ConwaysLifeGameRule : public RuleBase<ConwaysLifeGameTraits>
+
+
+class ConwaysLifeGameRule : public RuleBase<ConwaysLifeGameTypeTraits>
 {
   public:
-    using base_type  = RuleBase<ConwaysLifeGameTraits>;
+    using base_type  = RuleBase<ConwaysLifeGameTypeTraits>;
     using time_type  = typename base_type::time_type;
     using state_type = typename base_type::state_type;
     using cell_type  = typename base_type::cell_type;
@@ -58,6 +64,15 @@ ConwaysLifeGameRule::step(const cell_type& cell) const
     return (cell.state) ? (lives == 2 or lives == 3) : (lives == 3);
 }
 
+template<typename T_traits>
+struct ConwaysLifeGameSimulatorTraits
+{
+    using world_type    = SquareLattice<T_traits>;
+    using rule_type     = ConwaysLifeGameRule;
+    using stepper_type  = SynchronousStepper<T_traits>;
+    using observer_type = ConwaysLifeGameVisualizer<T_traits>;
+};
+
 template<>
 class RandomStateGenerator<boolean>
 {
@@ -71,7 +86,8 @@ class RandomStateGenerator<boolean>
     std::bernoulli_distribution bn_;
 };
 
-using ConwaysLifeGameObserver = ConwaysLifeGameVisualizer<ConwaysLifeGameTraits>;
+using ConwaysLifeGameObserver =
+    ConwaysLifeGameVisualizer<ConwaysLifeGameTypeTraits>;
 
 }
 
