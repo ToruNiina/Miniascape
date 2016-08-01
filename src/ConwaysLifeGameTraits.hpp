@@ -62,7 +62,7 @@ template<>
 class RandomStateGenerator<boolean>
 {
   public:
-    explicit RandomStateGenerator(const unsigned int s) : mt_(s), bn_(0.5){}
+    explicit RandomStateGenerator(const unsigned int s) : mt_(s), bn_(0.2){}
     ~RandomStateGenerator() = default;
 
     boolean operator()(){return bn_(mt_);}

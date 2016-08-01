@@ -6,7 +6,7 @@ using namespace miniascape;
 
 int main()
 {
-    ConwaysLifeGameSimulator simu(1000, 640, 480);
+    ConwaysLifeGameSimulator simu(10, 1000, 640, 480);
     ConwaysLifeGameRule rule;
     ConwaysLifeGameObserver obs(640, 480);
 
