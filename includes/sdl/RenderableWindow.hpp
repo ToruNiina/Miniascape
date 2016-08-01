@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <stdexcept>
 #include <memory>
+#include <chrono>
 #include <cstddef>
 
 namespace sdl
@@ -57,6 +58,18 @@ class RenderableWindow
     void update() const
     {
         SDL_RenderPresent(this->renderer_);
+        return;
+    }
+
+    template<typename Rep, typename Period>
+    void wait(const std::chrono::duration<Rep, Period>& dur) const
+    {
+        using syscl = std::chrono::system_clock;
+        syscl::time_point until = syscl::now() + dur;
+        while(syscl::now() < until)
+        {
+            SDL_PumpEvents();
+        }
         return;
     }
 
