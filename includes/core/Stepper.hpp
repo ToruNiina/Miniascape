@@ -20,7 +20,7 @@ class SynchronousStepper
     using world_type  = World<traits_type>;
 
     SynchronousStepper() = default;
-   ~SynchronousStepper() = default;
+    ~SynchronousStepper() = default;
     time_type step(world_type& world, const rule_type& rule) const;
 };
 
@@ -55,8 +55,10 @@ class AsynchronousRandomStepper
     using rule_type   = RuleBase<traits_type>;
     using world_type  = World<traits_type>;
 
-    AsynchronousRandomStepper() = default;
-   ~AsynchronousRandomStepper() = default;
+    AsynchronousRandomStepper(const std::shared_ptr<RandomNumberGenerator>& rng)
+        : rng_(rng)
+    {}
+    ~AsynchronousRandomStepper() = default;
     time_type step(world_type& world, const rule_type& rule) const;
 
     const std::shared_ptr<RandomNumberGenerator> rng_;
@@ -67,7 +69,7 @@ typename AsynchronousRandomStepper<T_traits>::time_type
 AsynchronousRandomStepper<T_traits>::step(
         world_type& world, const rule_type& rule) const
 {
-    const std::size_t idx = rng_->uniform_int<std::size_t>(0, world.size());
+    const std::size_t idx = rng_->uniform_int<std::size_t>(0, world.size()-1);
     world.at(idx)->state = rule.step(*(world.at(idx)));
 
     return rule.delta_t();
