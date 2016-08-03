@@ -26,7 +26,8 @@ class SynchronousStepper
 
 template<typename T_traits>
 typename SynchronousStepper<T_traits>::time_type
-SynchronousStepper<T_traits>::step(world_type& world, const rule_type& rule) const
+SynchronousStepper<T_traits>::step(
+        world_type& world, const rule_type& rule) const
 {
     std::vector<state_type> temp(world.size());
 
@@ -41,8 +42,10 @@ SynchronousStepper<T_traits>::step(world_type& world, const rule_type& rule) con
     return rule.delta_t();
 }
 
+
+
 template<typename T_traits>
-class AsynchronousStepper
+class AsynchronousRandomStepper
 {
   public:
     using traits_type = T_traits;
@@ -52,20 +55,20 @@ class AsynchronousStepper
     using rule_type   = RuleBase<traits_type>;
     using world_type  = World<traits_type>;
 
-    AsynchronousStepper() = default;
-   ~AsynchronousStepper() = default;
+    AsynchronousRandomStepper() = default;
+   ~AsynchronousRandomStepper() = default;
     time_type step(world_type& world, const rule_type& rule) const;
 
     const std::shared_ptr<RandomNumberGenerator> rng_;
 };
 
 template<typename T_traits>
-typename AsynchronousStepper<T_traits>::time_type
-AsynchronousStepper<T_traits>::step(world_type& world, const rule_type& rule) const
+typename AsynchronousRandomStepper<T_traits>::time_type
+AsynchronousRandomStepper<T_traits>::step(
+        world_type& world, const rule_type& rule) const
 {
-    std::size_t size = world.size();
-    std::size_t cell_idx = rng_->uniform_int<std::size_t>(0, size);
-    world.at(cell_idx)->state = rule.step(*(world.at(cell_idx)));
+    const std::size_t idx = rng_->uniform_int<std::size_t>(0, world.size());
+    world.at(idx)->state = rule.step(*(world.at(idx)));
 
     return rule.delta_t();
 }
