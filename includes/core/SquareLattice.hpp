@@ -2,7 +2,7 @@
 #define MINIASCAPE_SQUARE_LATTICE
 #include "core/World.hpp"
 #include "core/NeighborhoodIndex.hpp"
-#include "core/RandomStateGenerator.hpp"
+#include "core/RandomNumberGenerator.hpp"
 
 namespace miniascape
 {

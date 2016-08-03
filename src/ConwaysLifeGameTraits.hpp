@@ -5,7 +5,7 @@
 #include "core/Observer.hpp"
 #include "core/NeighborhoodIndex.hpp"
 #include "core/PeriodicBoundary.hpp"
-#include "core/RandomStateGenerator.hpp"
+#include "core/RandomNumberGenerator.hpp"
 #include "core/SquareLattice.hpp"
 #include "core/Stepper.hpp"
 #include "ConwaysLifeGameVisualizer.hpp"
@@ -45,12 +45,12 @@ class ConwaysLifeGameRule : public RuleBase<ConwaysLifeGameTypeTraits>
     ConwaysLifeGameRule() = default;
     ~ConwaysLifeGameRule() override = default;
 
-    state_type step(const cell_type& cell) override;
-    time_type  delta_t() override {return 1;}
+    state_type step(const cell_type& cell) const override;
+    time_type  delta_t() const override {return 1;}
 };
 
 inline typename ConwaysLifeGameRule::state_type
-ConwaysLifeGameRule::step(const cell_type& cell)
+ConwaysLifeGameRule::step(const cell_type& cell) const
 {
     std::size_t lives = 0;
     for(auto iter = cell.neighbors.cbegin();
