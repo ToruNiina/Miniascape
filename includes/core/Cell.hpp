@@ -15,8 +15,9 @@ struct Cell
     using state_type     = T_state;
     constexpr static int number_of_neighbors = I_neighbors;
     using self_type      = Cell<number_of_neighbors, state_type>;
-    using self_ptr       = self_type*;
-    using neighbors_type = std::array<self_ptr, number_of_neighbors>;
+    using self_ptr       = self_type *;
+    using self_const_ptr = self_type const*;
+    using neighbors_type = std::array<self_const_ptr, number_of_neighbors>;
 
     Cell() = default;
     virtual ~Cell() = default;
@@ -31,7 +32,6 @@ struct Cell<0, T_state>
     using state_type = T_state;
     constexpr static int number_of_neighbors = 0;
     using self_type  = Cell<number_of_neighbors, state_type>;
-    using self_ptr   = self_type*;
 
     Cell() = default;
     virtual ~Cell() = default;
@@ -46,7 +46,8 @@ struct Cell<DYNAMIC, T_state>
     constexpr static int number_of_neighbors = DYNAMIC;
     using self_type      = Cell<number_of_neighbors, state_type>;
     using self_ptr       = self_type*;
-    using neighbors_type = std::vector<self_ptr>;
+    using self_const_ptr = self_type const*;
+    using neighbors_type = std::vector<self_const_ptr>;
 
     Cell() = default;
     virtual ~Cell() = default;
