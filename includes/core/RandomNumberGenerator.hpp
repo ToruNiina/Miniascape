@@ -24,6 +24,8 @@ class RandomNumberGenerator
         return (std::uniform_real_distribution<T>(begin, end))(this->mt_);
     }
 
+    unsigned int seed() const {return seed_;}
+
   private:
     const unsigned int seed_;
     std::mt19937 mt_;
