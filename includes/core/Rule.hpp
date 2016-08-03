@@ -18,8 +18,8 @@ class RuleBase
     RuleBase() = default;
     virtual ~RuleBase() = default;
 
-    virtual state_type step(const cell_type& cell) = 0;
-    virtual time_type  delta_t() = 0;
+    virtual state_type step(const cell_type& cell) const = 0;
+    virtual time_type  delta_t() const = 0;
 };
 
 }
