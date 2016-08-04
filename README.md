@@ -11,8 +11,10 @@ simulator of the world that is composed of a number of cells that has own state.
 ## examples
 
 ### Conway's Game of Life
-
 ![conway's game of life](https://github.com/ToruNiina/Miniascape/raw/master/data/game_of_life.gif)
+
+### Ising Model
+![Ising model](https://github.com/ToruNiina/Miniascape/raw/master/data/ising_model.gif)
 
 ## dependency
 
