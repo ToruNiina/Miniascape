@@ -58,7 +58,7 @@ void SquareLattice<T_traits>::create(
     for(std::size_t v = 0; v < this->vertical_ ; ++v)
     for(std::size_t h = 0; h < this->horizontal_ ; ++h)
     {
-        for(auto i = 0; i < 8; ++i)
+        for(auto i = 0; i < num_neighbor; ++i)
         {
             const auto index = boundary_.access(i, {{v, h}});
             (*this)(v, h)->neighbors.at(i) = (*this)(index[0], index[1]).get();
