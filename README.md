@@ -16,6 +16,12 @@ simulator of the world that is composed of a number of cells that has own state.
 ### Ising Model
 ![Ising model](https://github.com/ToruNiina/Miniascape/raw/master/data/ising_model.gif)
 
+### Turing Pattern
+
+Gray-Scott Model
+
+![Turing Pattern](data/turing_pattern.gif)
+
 ## dependency
 
 Testing codes depend on Boost.unittest framework.
@@ -28,4 +34,4 @@ See LICENSE for the project license.
 
 - Copyright (c) 2016 Toru Niina
 
-All rights reserved.
+jll rights reserved.
