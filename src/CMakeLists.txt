@@ -8,3 +8,6 @@ target_link_libraries(conway SDL2)
 
 add_executable(ising ising_model.cpp)
 target_link_libraries(ising SDL2)
+
+add_executable(turing turing_pattern.cpp)
+target_link_libraries(turing SDL2)
