@@ -47,8 +47,8 @@ class IsingModelRule : public RuleBase<IsingModelTypeTraits>
   public:
     IsingModelRule(const std::shared_ptr<RandomNumberGenerator>& rng,
                    const double kB = 1., const double T = 1.)
-        : dEs{1.0, std::exp(-1./(kB * T)), std::exp(-2./(kB * T)),
-                   std::exp(-3./(kB * T)), std::exp(-4./(kB * T))}, rng_(rng)
+        : dEs{{1.0, std::exp(-1./(kB * T)), std::exp(-2./(kB * T)),
+                   std::exp(-3./(kB * T)), std::exp(-4./(kB * T))}}, rng_(rng)
     {}
     ~IsingModelRule() override = default;
 
@@ -82,7 +82,7 @@ struct IsingModelSimulatorTraits
     using world_type    = SquareLattice<T_traits>;
     using rule_type     = IsingModelRule;
     using stepper_type  = AsynchronousSuccessiveStepper<T_traits>;
-    using observer_type = DefaultObserver<T_traits>;
+    using observer_type = IsingModelVisualizer<T_traits>;
 };
 
 using IsingModelObserver =
