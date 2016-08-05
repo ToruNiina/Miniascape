@@ -53,7 +53,7 @@ void IsingModelVisualizer<T_traits>::observe(
     for(int y = 0; y < size.second; ++y)
     {
         sdl::Point pos{x, y};
-        if(sql(x, y)->state.val)
+        if(sql(x, y)->state)
             window_.putpixel(pos, up);
     }
     window_.update();
