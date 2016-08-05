@@ -15,8 +15,7 @@ class System
     {
         auto result = SDL_Init(flag);
         if(result != 0)
-            throw InitError("SDL system " + std::to_string(flag) +
-                            " initialization failed");
+            throw InitError(std::string(SDL_GetError()));
     }
     ~System() noexcept {SDL_Quit();}
 
