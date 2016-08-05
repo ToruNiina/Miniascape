@@ -31,7 +31,7 @@ class Simulator
     virtual ~Simulator() = default;
 
     virtual void initialize(){};
-            bool step_(const rule_type& rule, stepper_type& stepper);
+            bool step_(const rule_type& rule, const stepper_type& stepper);
             void observe(observer_type& obs) const;
     virtual void finalize(){};
 
@@ -44,7 +44,7 @@ class Simulator
 
 template<template<typename T>class T_simulator_traits, typename T_traits>
 inline bool Simulator<T_simulator_traits, T_traits>::step_(
-        const rule_type& rule, stepper_type& stepper)
+        const rule_type& rule, const stepper_type& stepper)
 {
     this->t_ += stepper.step(world_, rule);
     return (t_ >= t_end_) ? false : true;
