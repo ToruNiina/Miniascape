@@ -65,12 +65,42 @@ class AsynchronousRandomStepper
 };
 
 template<typename T_traits>
-typename AsynchronousRandomStepper<T_traits>::time_type
+inline typename AsynchronousRandomStepper<T_traits>::time_type
 AsynchronousRandomStepper<T_traits>::step(
         world_type& world, const rule_type& rule) const
 {
     const std::size_t idx = rng_->uniform_int<std::size_t>(0, world.size()-1);
     world.at(idx)->state = rule.step(*(world.at(idx)));
+
+    return rule.delta_t();
+}
+
+
+template<typename T_traits>
+class AsynchronousSuccessiveStepper
+{
+  public:
+    using traits_type = T_traits;
+    using time_type   = typename traits_type::time_type;
+    using state_type  = typename traits_type::state_type;
+    using cell_type   = typename traits_type::cell_type;
+    using rule_type   = RuleBase<traits_type>;
+    using world_type  = World<traits_type>;
+
+    AsynchronousSuccessiveStepper() = default;
+    ~AsynchronousSuccessiveStepper() = default;
+    time_type step(world_type& world, const rule_type& rule) const;
+
+    const std::shared_ptr<RandomNumberGenerator> rng_;
+};
+
+template<typename T_traits>
+inline typename AsynchronousSuccessiveStepper<T_traits>::time_type
+AsynchronousSuccessiveStepper<T_traits>::step(
+        world_type& world, const rule_type& rule) const
+{
+    for(auto cell = world.cbegin(); cell != world.cend(); ++cell)
+        (*cell)->state = rule.step(**cell);
 
     return rule.delta_t();
 }
