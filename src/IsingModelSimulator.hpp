@@ -23,7 +23,7 @@ class IsingModelSimulator
     IsingModelSimulator(const unsigned int seed, const time_type t_end,
             const std::size_t v, const std::size_t h)
         : Simulator(t_end), rng_(std::make_shared<RandomNumberGenerator>(seed)),
-          seed_(seed), vertical_(v), horizontal_(h), rule_(rng_), stepper_(rng_)
+          seed_(seed), vertical_(v), horizontal_(h), rule_(rng_), stepper_()
     {}
     ~IsingModelSimulator() = default;
 

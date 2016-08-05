@@ -41,8 +41,8 @@ struct IsingModelTypeTraits
     using size_type     = std::size_t;
     using time_type     = std::size_t;
     using state_type    = boolean;
-    using cell_type     = Cell<8, state_type>;
-    using neighbor_type = MooreNeighborhood;
+    using neighbor_type = VonNeumannNeighborhood;
+    using cell_type     = Cell<neighbor_type::num_neighbor, state_type>;
     using boundary_type = PeriodicBoundary<neighbor_type>;
 };
 
@@ -90,7 +90,7 @@ struct IsingModelSimulatorTraits
 {
     using world_type    = SquareLattice<T_traits>;
     using rule_type     = IsingModelRule;
-    using stepper_type  = AsynchronousRandomStepper<T_traits>;
+    using stepper_type  = AsynchronousSuccessiveStepper<T_traits>;
     using observer_type = IsingModelVisualizer<T_traits>;
 };
 
