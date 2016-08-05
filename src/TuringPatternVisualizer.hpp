@@ -60,7 +60,7 @@ void TuringPatternVisualizer<T_traits>::observe(
         if(u_cell < u_min) u_min = u_cell;
     }
 
-    const double standardize_constant = 1.0 / (u_max - u_min);
+    const double standardize_constant = (u_max - u_min > 0.) ? 1.0 / (u_max - u_min) : 0.;
     for(int x = 0; x < size.first; ++x)
     for(int y = 0; y < size.second; ++y)
     {
