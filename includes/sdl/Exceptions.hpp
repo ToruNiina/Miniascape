@@ -49,6 +49,17 @@ class RendererError : public Exception
     const std::string mes_;
 };
 
+class EventError : public Exception
+{
+  public:
+    EventError(const std::string& mes) : mes_(mes){}
+    virtual ~EventError() noexcept override = default;
+
+    virtual const char* what() const noexcept override {return mes_.c_str();}
+  protected:
+    const std::string mes_;
+};
+
 }//sdl
 
 #endif /* MINIASCAPE_SDL_EXCEPTION */
