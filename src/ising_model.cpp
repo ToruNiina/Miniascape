@@ -13,6 +13,7 @@ int main()
     while(simu.step())
     {
         simu.observe(obs);
+        if(obs.closed()) break;
     }
     simu.finalize();
 
