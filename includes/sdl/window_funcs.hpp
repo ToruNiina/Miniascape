@@ -1,6 +1,7 @@
 #ifndef MINIASCAPE_SDL_WINDOW_FUNCS
 #define MINIASCAPE_SDL_WINDOW_FUNCS
 #include <SDL2/SDL.h>
+#include <utility>
 
 namespace sdl
 {
@@ -44,20 +45,25 @@ void Show(const Window<T_smart_ptr>& win)
     return SDL_ShowWindow(win.get());
 }
 
-
-// setter
 template<template<typename Tp_, typename Dp_>class T_smart_ptr>
 void SetFullscreen(const Window<T_smart_ptr>& win, const Uint32 flags)
 {
     return SDL_SetWindowFullscreen(win.get(), flags);
 }
 
-// getter
+template<template<typename Tp_, typename Dp_>class T_smart_ptr>
+std::pair<std::size_t, std::size_t> GetSize(const Window<T_smart_ptr>& win)
+{
+    int w(0), h(0); SDL_GetWindowSize(win.get(), &w, &h);
+    return std::make_pair(static_cast<std::size_t>(w), static_cast<std::size_t>(h));
+}
+
 template<template<typename Tp_, typename Dp_>class T_smart_ptr>
 Uint32 GetFlags(const Window<T_smart_ptr>& win)
 {
     return SDL_GetWindowFlags(win.get());
 }
+
 
 }//sdl
 
