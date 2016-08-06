@@ -60,6 +60,9 @@ class Renderer
     resource_type renderer_;
 };
 
+typedef SDL_RendererInfo RendererInfo;
+
+
 }//sdl
 
 #endif /* MINIASCAPE_SDL_RENDERER */
