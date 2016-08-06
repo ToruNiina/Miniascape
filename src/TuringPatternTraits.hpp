@@ -70,21 +70,25 @@ class TuringPatternRule : public RuleBase<TuringPatternTypeTraits>
 inline typename TuringPatternRule::state_type
 TuringPatternRule::step(const cell_type& cell) const
 {
-    Molecules next = cell.state;
+    Molecules dconc{0.,0.};
 
     for(auto iter = cell.neighbors.cbegin();
             iter != cell.neighbors.cend(); ++iter)
     {
-        next.u += this->Du_ * ((*iter)->state.u - cell.state.u);
-        next.v += this->Dv_ * ((*iter)->state.v - cell.state.v);
+        dconc.u += (*iter)->state.u;
+        dconc.v += (*iter)->state.v;
     }
+    dconc.u -= cell.neighbors.size() * cell.state.u;
+    dconc.v -= cell.neighbors.size() * cell.state.v;
+    dconc.u *= Du_;
+    dconc.v *= Dv_;
 
     const double uvv = cell.state.u * cell.state.v * cell.state.v;
 
-    next.u += 0.5 * ((-1.0 * uvv) + (F_ * (1.0 - cell.state.u)));
-    next.v += 0.5 * (        uvv  - ((F_ + k_) * cell.state.v));
+    dconc.u += 0.5 * ((-1.0 * uvv) + (F_ * (1.0 - cell.state.u)));
+    dconc.v += 0.5 * (        uvv  - ((F_ + k_) * cell.state.v));
 
-    return next;
+    return Molecules{cell.state.u + dconc.u, cell.state.v + dconc.v};
 }
 
 template<typename T_traits>
