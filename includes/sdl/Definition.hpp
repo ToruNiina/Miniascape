@@ -2,11 +2,13 @@
 #define MINIASCAPE_SDL_RENDERABLE_WINDOW
 #include <SDL2/SDL.h>
 
-namespace miniascape
+namespace sdl
 {
 
 using Point = SDL_Point;
 using Color = SDL_Color;
+using Event = SDL_Event;
+using Rect  = SDL_Rect;
 
 }
 
