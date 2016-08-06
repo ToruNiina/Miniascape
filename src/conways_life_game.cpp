@@ -6,13 +6,14 @@ using namespace miniascape;
 
 int main()
 {
-    ConwaysLifeGameSimulator simu(10, 1000, 640, 480);
-    ConwaysLifeGameObserver  obs(640, 480);
+    ConwaysLifeGameSimulator simu(10, 3000, 960, 640);
+    ConwaysLifeGameObserver  obs(960, 640);
 
     simu.initialize();
     while(simu.step())
     {
         simu.observe(obs);
+        if(obs.closed()) break;
     }
     simu.finalize();
 
