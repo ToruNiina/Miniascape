@@ -43,8 +43,8 @@ PeriodicBoundary<T_neighbor>::access(
         const cell_index_type& id, const T_world& container) const
 {
     cell_index_type index = id;
-    for(auto iter = meke_zip(index.begin(), begin_.cbegin(), end_.cbegin());
-            iter != meke_zip(index.end(), begin_.cend(), end_.cend());
+    for(auto iter = make_zip(index.begin(), begin_.cbegin(), end_.cbegin());
+            iter != make_zip(index.end(), begin_.cend(), end_.cend());
             ++iter)
     {
         const std::size_t range = *get<2>(iter) - *get<1>(iter);
