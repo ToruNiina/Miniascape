@@ -29,7 +29,8 @@ class ConwaysLifeGameVisualizer : public Observer<T_traits>
   public:
     ConwaysLifeGameVisualizer(const std::size_t x, const std::size_t y)
         : system_(SDL_INIT_VIDEO), window_("Conway's Game of Life", 0, 0, x, y,
-          SDL_WINDOW_SHOWN), renderer_(window_, -1, SDL_RENDERER_ACCELERATED)
+          SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE),
+          renderer_(window_, -1, SDL_RENDERER_ACCELERATED)
     {
         const sdl::Color black{0, 0, 0, 0};
         sdl::SetDrawColor(this->renderer_, black);
@@ -62,7 +63,7 @@ void ConwaysLifeGameVisualizer<T_traits>::observe(
     for(int x = 0; x < size.first; ++x)
     for(int y = 0; y < size.second; ++y)
     {
-        if(sql(x, y)->state)
+        if(sql.access(x, y)->state)
         {
             sdl::Point pos{x, y};
             sdl::SetDrawColor(this->renderer_, green);
@@ -76,8 +77,24 @@ void ConwaysLifeGameVisualizer<T_traits>::observe(
     sdl::Event ev;
     while(syscl::now() < until)
     {
-        if(sdl::PollEvent(ev) && ev.type == SDL_QUIT)
-            closed_ = true;
+        if(sdl::PollEvent(ev))
+        {
+            switch(ev.type)
+            {
+              case SDL_QUIT:
+              {
+                  closed_ = true; break;
+              }
+              case SDL_WINDOWEVENT:
+              {
+                  switch(ev.window.event)
+                  {
+                    case SDL_WINDOWEVENT_MAXIMIZED:
+                      sdl::Maximize(window_); break;
+                  }
+              }
+            }
+        }
     }
     return;
 }
