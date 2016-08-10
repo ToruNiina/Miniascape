@@ -1,5 +1,6 @@
 set(TEST_NAMES
     test_zip_iterator
+    test_periodic_boundary
     )
 
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/)
