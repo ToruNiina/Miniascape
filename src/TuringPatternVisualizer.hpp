@@ -92,21 +92,12 @@ void TuringPatternVisualizer<T_traits>::observe(
     {
         if(sdl::PollEvent(ev))
         {
-            switch(ev.type)
-            {
-                case SDL_QUIT:
-                {
-                    closed_ = true; break;
-                }
-                case SDL_WINDOWEVENT:
-                {
-                    switch(ev.window.event)
-                    {
-                      case SDL_WINDOWEVENT_MAXIMIZED:
-                        sdl::Maximize(window_); break;
-                    }
-                }
-            }
+            if(ev.type == SDL_QUIT)
+                closed_ = true;
+            else if(ev.type == SDL_WINDOWEVENT &&
+                    ev.window.event == SDL_WINDOWEVENT_MAXIMIZED)
+                sdl::Maximize(window_);
+            break;
         }
     }
     return;

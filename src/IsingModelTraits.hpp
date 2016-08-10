@@ -47,8 +47,9 @@ class IsingModelRule : public RuleBase<IsingModelTypeTraits>
   public:
     IsingModelRule(const std::shared_ptr<RandomNumberGenerator>& rng,
                    const double kB = 1., const double T = 1.)
-        : dEs{{1.0, std::exp(-1./(kB * T)), std::exp(-2./(kB * T)),
-                   std::exp(-3./(kB * T)), std::exp(-4./(kB * T))}}, rng_(rng)
+        : probs{{1.0, std::exp(-1./(kB * T)), std::exp(-2./(kB * T)),
+                      std::exp(-3./(kB * T)), std::exp(-4./(kB * T))}},
+          rng_(rng)
     {}
     ~IsingModelRule() override = default;
 
@@ -56,7 +57,7 @@ class IsingModelRule : public RuleBase<IsingModelTypeTraits>
     time_type  delta_t() const override {return 1;}
 
   private:
-    const std::array<double, 5> dEs;
+    const std::array<double, 5> probs;
     const std::shared_ptr<RandomNumberGenerator> rng_;
 };
 
@@ -64,7 +65,7 @@ inline typename IsingModelRule::state_type
 IsingModelRule::step(const cell_type& cell) const
 {
     const bool center = cell.state;
-    int dE = 0;
+    short dE = 0;
     for(auto iter = cell.neighbors.cbegin();
             iter != cell.neighbors.cend(); ++iter)
     {
@@ -73,7 +74,7 @@ IsingModelRule::step(const cell_type& cell) const
     }
 
     return (dE <= 0) ? (!center) :
-        ((rng_->uniform_real<double>(0.,1.) < dEs.at(dE)) != center);
+        ((rng_->uniform_real<float>(0.,1.) < probs.at(dE)) != center);
 }
 
 template<typename T_traits>

@@ -71,6 +71,8 @@ inline typename TuringPatternRule::state_type
 TuringPatternRule::step(const cell_type& cell) const
 {
     Molecules dconc{0.,0.};
+    const double u = cell.state.u;
+    const double v = cell.state.v;
 
     for(auto iter = cell.neighbors.cbegin();
             iter != cell.neighbors.cend(); ++iter)
@@ -78,17 +80,17 @@ TuringPatternRule::step(const cell_type& cell) const
         dconc.u += (*iter)->state.u;
         dconc.v += (*iter)->state.v;
     }
-    dconc.u -= cell.neighbors.size() * cell.state.u;
-    dconc.v -= cell.neighbors.size() * cell.state.v;
+    dconc.u -= cell.neighbors.size() * u;
+    dconc.v -= cell.neighbors.size() * v;
     dconc.u *= Du_;
     dconc.v *= Dv_;
 
-    const double uvv = cell.state.u * cell.state.v * cell.state.v;
+    const double uvv = u * v * v;
 
-    dconc.u += 0.5 * ((-1.0 * uvv) + (F_ * (1.0 - cell.state.u)));
-    dconc.v += 0.5 * (        uvv  - ((F_ + k_) * cell.state.v));
+    dconc.u += 0.5 * ((-1.0 * uvv) + (F_ * (1.0 - u)));
+    dconc.v += 0.5 * (        uvv  - ((F_ + k_) * v));
 
-    return Molecules{cell.state.u + dconc.u, cell.state.v + dconc.v};
+    return Molecules{u + dconc.u, v + dconc.v};
 }
 
 template<typename T_traits>
