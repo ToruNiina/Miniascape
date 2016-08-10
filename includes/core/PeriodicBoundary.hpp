@@ -47,7 +47,7 @@ PeriodicBoundary<T_neighbor>::access(
             iter != make_zip(index.end(), begin_.cend(), end_.cend());
             ++iter)
     {
-        const std::size_t range = *get<2>(iter) - *get<1>(iter);
+        const int range = *get<2>(iter) - *get<1>(iter);
         if((*get<0>(iter) < *get<1>(iter)) /* index < begin */||
            (*get<0>(iter) >= *get<2>(iter))/* end <= index  */) 
         {
@@ -69,7 +69,7 @@ PeriodicBoundary<T_neighbor>::access(
             iter != make_zip(index.end(), begin_.cend(), end_.cend());
             ++iter)
     {
-        const std::size_t range = *get<2>(iter) - *get<1>(iter);
+        const int range = *get<2>(iter) - *get<1>(iter);
         if((*get<0>(iter) < *get<1>(iter)) /* index < begin */||
            (*get<0>(iter) >= *get<2>(iter))/* end <= index  */) 
         {
