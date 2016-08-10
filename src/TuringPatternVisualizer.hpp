@@ -31,7 +31,8 @@ class TuringPatternVisualizer : public Observer<T_traits>
     TuringPatternVisualizer(const std::size_t x, const std::size_t y)
         : system_(SDL_INIT_VIDEO),
           window_("Gray-Scott reaction diffusion model", 0, 0, x, y,
-          SDL_WINDOW_SHOWN), renderer_(window_, -1, SDL_RENDERER_ACCELERATED)
+          SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE),
+          renderer_(window_, -1, SDL_RENDERER_ACCELERATED)
     {
         const sdl::Color black{0, 0, 0, 0};
         sdl::SetDrawColor(this->renderer_, black);
@@ -66,7 +67,7 @@ void TuringPatternVisualizer<T_traits>::observe(
     for(int x = 0; x < size.first; ++x)
     for(int y = 0; y < size.second; ++y)
     {
-        const double u_cell = sql(x,y)->state.u;
+        const double u_cell = sql.access(x,y)->state.u;
         if(u_cell > u_max) u_max = u_cell;
         if(u_cell < u_min) u_min = u_cell;
     }
@@ -75,8 +76,8 @@ void TuringPatternVisualizer<T_traits>::observe(
     for(int x = 0; x < size.first; ++x)
     for(int y = 0; y < size.second; ++y)
     {
-        const double u_color = (sql(x,y)->state.u - u_min) * standardize_constant;
-
+        const double u_color = (sql.access(x,y)->state.u - u_min) *
+                                standardize_constant;
         sdl::Point pos{x, y};
         sdl::SetDrawColor(this->renderer_, coloring(u_color));
         sdl::DrawPoint(this->renderer_, pos);
@@ -89,10 +90,23 @@ void TuringPatternVisualizer<T_traits>::observe(
     sdl::Event ev;
     while(syscl::now() < until)
     {
-        if(sdl::PollEvent(ev) && ev.type == SDL_QUIT)
+        if(sdl::PollEvent(ev))
         {
-            this->closed_ = true;
-            break;
+            switch(ev.type)
+            {
+                case SDL_QUIT:
+                {
+                    closed_ = true; break;
+                }
+                case SDL_WINDOWEVENT:
+                {
+                    switch(ev.window.event)
+                    {
+                      case SDL_WINDOWEVENT_MAXIMIZED:
+                        sdl::Maximize(window_); break;
+                    }
+                }
+            }
         }
     }
     return;
