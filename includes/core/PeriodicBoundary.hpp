@@ -2,6 +2,7 @@
 #define MINIASCAPE_PERIODIC_BOUNDARY
 #include <array>
 #include "util/zip_iterator.hpp"
+#include "Cell.hpp"
 
 namespace miniascape
 {
@@ -10,8 +11,9 @@ template<typename T_neighbor>
 class PeriodicBoundary
 {
   public:
-    constexpr static std::size_t dimension = T_neighbor::dimension;
-    using cell_index_type = std::array<std::size_t, dimension>;
+    using neighbor_type   = T_neighbor;
+    using cell_index_type = typename neighbor_type::cell_index_type;
+    constexpr static std::size_t dimension = neighbor_type::dimension;
 
   public:
     PeriodicBoundary() = default;
@@ -20,7 +22,13 @@ class PeriodicBoundary
     {}
     ~PeriodicBoundary() = default;
 
-    cell_index_type access(const std::size_t i, const cell_index_type& id) const;
+    template<typename T_world>
+    typename T_world::cell_ptr const&
+    access(const cell_index_type& id, const T_world& world) const;
+
+    template<typename T_world>
+    typename T_world::cell_ptr &
+    access(const cell_index_type& id, T_world& container) const;
 
   private:
     // [begin, end)
@@ -29,28 +37,47 @@ class PeriodicBoundary
 };
 
 template<typename T_neighbor>
-typename PeriodicBoundary<T_neighbor>::cell_index_type
-PeriodicBoundary<T_neighbor>::access(const std::size_t i,
-                                     const cell_index_type& index) const
+template<typename T_world>
+typename T_world::cell_ptr const&
+PeriodicBoundary<T_neighbor>::access(
+        const cell_index_type& id, const T_world& container) const
 {
-    cell_index_type retval = index;
-
-    // to avoid size_t(-1) overflow
-    for(auto iter = make_zip(begin_.cbegin(), end_.cbegin(), retval.begin());
-            iter != make_zip(begin_.cend(),   end_.cend(),   retval.end());
+    cell_index_type index = id;
+    for(auto iter = meke_zip(index.begin(), begin_.cbegin(), end_.cbegin());
+            iter != meke_zip(index.end(), begin_.cend(), end_.cend());
             ++iter)
-        if(*get<0>(iter) == *get<2>(iter))
-            *get<2>(iter) = *get<1>(iter);
+    {
+        const std::size_t range = *get<2>(iter) - *get<1>(iter);
+        if((*get<0>(iter) < *get<1>(iter)) /* index < begin */||
+           (*get<0>(iter) >= *get<2>(iter))/* end <= index  */) 
+        {
+            const int idx = *get<0>(iter) % range;
+            *get<0>(iter) = (idx < 0) ? idx + range : idx;
+        }
+    }
+    return container(index);
+}
 
-    retval = T_neighbor::access(i, retval);
-
-    for(auto iter = make_zip(begin_.cbegin(), end_.cbegin(), retval.begin());
-            iter != make_zip(begin_.cend(),   end_.cend(),   retval.end());
+template<typename T_neighbor>
+template<typename T_world>
+typename T_world::cell_ptr &
+PeriodicBoundary<T_neighbor>::access(
+        const cell_index_type& id, T_world& container) const
+{
+    cell_index_type index = id;
+    for(auto iter = make_zip(index.begin(), begin_.cbegin(), end_.cbegin());
+            iter != make_zip(index.end(), begin_.cend(), end_.cend());
             ++iter)
-        if(*get<1>(iter) <= *get<2>(iter))
-            *get<2>(iter) -= *get<1>(iter);
-
-    return retval;
+    {
+        const std::size_t range = *get<2>(iter) - *get<1>(iter);
+        if((*get<0>(iter) < *get<1>(iter)) /* index < begin */||
+           (*get<0>(iter) >= *get<2>(iter))/* end <= index  */) 
+        {
+            const int idx = *get<0>(iter) % range;
+            *get<0>(iter) = (idx < 0) ? idx + range : idx;
+        }
+    }
+    return container(index);
 }
 
 }

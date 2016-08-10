@@ -17,7 +17,7 @@ struct MooreNeighborhood
 {
     constexpr static std::size_t dimension = 2;
     constexpr static std::size_t num_neighbor = 8;
-    using index_type      = std::size_t;
+    using index_type      = int;
     using cell_index_type = std::array<index_type, dimension>;
 
     static cell_index_type access(
@@ -56,7 +56,7 @@ struct VonNeumannNeighborhood
 {
     constexpr static std::size_t dimension = 2;
     constexpr static std::size_t num_neighbor = 4;
-    using index_type      = std::size_t;
+    using index_type      = int;
     using cell_index_type = std::array<index_type, dimension>;
 
     static cell_index_type access(
