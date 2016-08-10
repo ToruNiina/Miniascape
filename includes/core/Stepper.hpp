@@ -37,7 +37,7 @@ SynchronousStepper<T_traits>::step(
 
     for(auto cell = make_zip(world.begin(), temp.begin());
             cell != make_zip(world.end(),   temp.end()); ++cell)
-        (*get<0>(cell))->state = *get<1>(cell);
+        (*get<0>(cell))->state = std::move(*get<1>(cell));
 
     return rule.delta_t();
 }
