@@ -1,6 +1,5 @@
 #ifndef MINIASCAPE_RANDOM_STATE_GENERATOR
 #define MINIASCAPE_RANDOM_STATE_GENERATOR
-#include "util/meta_function.hpp"
 #include <random>
 
 namespace miniascape
