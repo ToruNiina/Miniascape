@@ -55,7 +55,7 @@ VacantBoundary<T_state, T_neighbor>::access(
         if(*get<0>(iter) < *get<1>(iter) || *get<2>(iter) <= *get<0>(iter))
             return vacant_;
     }
-    return container(index);
+    return container(id);
 }
 
 template<typename T_state, typename T_neighbor>
@@ -71,7 +71,7 @@ VacantBoundary<T_state, T_neighbor>::access(
         if(*get<0>(iter) < *get<1>(iter) || *get<2>(iter) <= *get<0>(iter))
             return vacant_;
     }
-    return container(index);
+    return container(id);
 }
 
 }//miniascape
