@@ -1,5 +1,6 @@
 set(TEST_NAMES
     test_zip_iterator
+    test_make_array
     test_periodic_boundary
     )
 
