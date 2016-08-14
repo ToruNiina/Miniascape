@@ -34,4 +34,4 @@ See LICENSE for the project license.
 
 - Copyright (c) 2016 Toru Niina
 
-jll rights reserved.
+all rights reserved.
