@@ -1,7 +1,8 @@
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/)
-include_directories("${CMAKE_SOURCE_DIR}/includes")
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/)
+include_directories("${PROJECT_SOURCE_DIR}/includes")
 
-add_definitions(-Wall -O3)
+find_file(SDL2_INCLUDE_DIR NAME SDL.h HINTS SDL2)
+find_library(SDL2_LIBRARY  NAME SDL2)
 
 add_executable(conway conways_life_game.cpp)
 target_link_libraries(conway SDL2)

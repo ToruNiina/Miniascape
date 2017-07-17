@@ -4,8 +4,8 @@ set(TEST_NAMES
     test_periodic_boundary
     )
 
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/)
-include_directories("${CMAKE_SOURCE_DIR}/includes")
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/)
+include_directories("${PROJECT_SOURCE_DIR}/includes")
 
 set(test_library_dependencies)
 find_library(BOOST_UNITTEST_FRAMEWORK_LIBRARY boost_unit_test_framework)
