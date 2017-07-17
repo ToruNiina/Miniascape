@@ -1,7 +1,7 @@
 #ifndef MINIASCAPE_PERIODIC_BOUNDARY
 #define MINIASCAPE_PERIODIC_BOUNDARY
 #include <array>
-#include "util/zip_iterator.hpp"
+#include <pseudo/zip_iterator.hpp>
 #include "Cell.hpp"
 
 namespace miniascape
@@ -43,16 +43,16 @@ PeriodicBoundary<T_neighbor>::access(
         const cell_index_type& id, const T_world& container) const
 {
     cell_index_type index = id;
-    for(auto iter = make_zip(index.begin(), begin_.cbegin(), end_.cbegin());
-            iter != make_zip(index.end(), begin_.cend(), end_.cend());
+    for(auto iter = psd::make_zip_iterator(index.begin(), begin_.cbegin(), end_.cbegin());
+            iter != psd::make_zip_iterator(index.end(), begin_.cend(), end_.cend());
             ++iter)
     {
-        const int range = *get<2>(iter) - *get<1>(iter);
-        if((*get<0>(iter) < *get<1>(iter)) /* index < begin */||
-           (*get<0>(iter) >= *get<2>(iter))/* end <= index  */) 
+        const int range = *psd::get<2>(iter) - *psd::get<1>(iter);
+        if((*psd::get<0>(iter) < *psd::get<1>(iter)) /* index < begin */||
+           (*psd::get<0>(iter) >= *psd::get<2>(iter))/* end <= index  */) 
         {
-            const int idx = *get<0>(iter) % range;
-            *get<0>(iter) = (idx < 0) ? idx + range : idx;
+            const int idx = *psd::get<0>(iter) % range;
+            *psd::get<0>(iter) = (idx < 0) ? idx + range : idx;
         }
     }
     return container(index);
@@ -65,16 +65,16 @@ PeriodicBoundary<T_neighbor>::access(
         const cell_index_type& id, T_world& container) const
 {
     cell_index_type index = id;
-    for(auto iter = make_zip(index.begin(), begin_.cbegin(), end_.cbegin());
-            iter != make_zip(index.end(), begin_.cend(), end_.cend());
+    for(auto iter = psd::make_zip_iterator(index.begin(), begin_.cbegin(), end_.cbegin());
+            iter != psd::make_zip_iterator(index.end(), begin_.cend(), end_.cend());
             ++iter)
     {
-        const int range = *get<2>(iter) - *get<1>(iter);
-        if((*get<0>(iter) < *get<1>(iter)) /* index < begin */||
-           (*get<0>(iter) >= *get<2>(iter))/* end <= index  */) 
+        const int range = *psd::get<2>(iter) - *psd::get<1>(iter);
+        if((*psd::get<0>(iter) < *psd::get<1>(iter)) /* index < begin */||
+           (*psd::get<0>(iter) >= *psd::get<2>(iter))/* end <= index  */) 
         {
-            const int idx = *get<0>(iter) % range;
-            *get<0>(iter) = (idx < 0) ? idx + range : idx;
+            const int idx = *psd::get<0>(iter) % range;
+            *psd::get<0>(iter) = (idx < 0) ? idx + range : idx;
         }
     }
     return container(index);

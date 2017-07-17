@@ -3,7 +3,7 @@
 #include "core/World.hpp"
 #include "core/Rule.hpp"
 #include "core/RandomNumberGenerator.hpp"
-#include "util/zip_iterator.hpp"
+#include <pseudo/zip_iterator.hpp>
 
 namespace miniascape
 {
@@ -31,13 +31,13 @@ SynchronousStepper<T_traits>::step(
 {
     std::vector<state_type> temp(world.size());
 
-    for(auto cell = make_zip(world.cbegin(), temp.begin());
-            cell != make_zip(world.cend(),   temp.end()); ++cell)
-        *get<1>(cell) = rule.step(**get<0>(cell));
+    for(auto cell = psd::make_zip_iterator(world.cbegin(), temp.begin());
+            cell != psd::make_zip_iterator(world.cend(),   temp.end()); ++cell)
+        *psd::get<1>(cell) = rule.step(**psd::get<0>(cell));
 
-    for(auto cell = make_zip(world.begin(), temp.begin());
-            cell != make_zip(world.end(),   temp.end()); ++cell)
-        (*get<0>(cell))->state = std::move(*get<1>(cell));
+    for(auto cell = psd::make_zip_iterator(world.begin(), temp.begin());
+            cell != psd::make_zip_iterator(world.end(),   temp.end()); ++cell)
+        (*psd::get<0>(cell))->state = std::move(*psd::get<1>(cell));
 
     return rule.delta_t();
 }

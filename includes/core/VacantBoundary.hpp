@@ -2,7 +2,7 @@
 #define MINIASCAPE_VOID_BOUNDARY
 #include <array>
 #include <memory>
-#include "util/zip_iterator.hpp"
+#include <pseudo/zip_iterator.hpp>
 #include "Cell.hpp"
 
 namespace miniascape
@@ -48,11 +48,11 @@ typename T_world::cell_ptr const&
 VacantBoundary<T_state, T_neighbor>::access(
         const cell_index_type& id, const T_world& container) const
 {
-    for(auto iter = make_zip(id.begin(), begin_.cbegin(), end_.cbegin());
-            iter != make_zip(id.end(), begin_.cend(), end_.cend());
+    for(auto iter = psd::make_zip_iterator(id.begin(), begin_.cbegin(), end_.cbegin());
+            iter != psd::make_zip_iterator(id.end(), begin_.cend(), end_.cend());
             ++iter)
     {
-        if(*get<0>(iter) < *get<1>(iter) || *get<2>(iter) <= *get<0>(iter))
+        if(*psd::get<0>(iter) < *psd::get<1>(iter) || *psd::get<2>(iter) <= *psd::get<0>(iter))
             return vacant_;
     }
     return container(id);
@@ -64,11 +64,11 @@ typename T_world::cell_ptr &
 VacantBoundary<T_state, T_neighbor>::access(
         const cell_index_type& id, T_world& container) const
 {
-    for(auto iter = make_zip(id.begin(), begin_.cbegin(), end_.cbegin());
-            iter != make_zip(id.end(), begin_.cend(), end_.cend());
+    for(auto iter = psd::make_zip_iterator(id.begin(), begin_.cbegin(), end_.cbegin());
+            iter != psd::make_zip_iterator(id.end(), begin_.cend(), end_.cend());
             ++iter)
     {
-        if(*get<0>(iter) < *get<1>(iter) || *get<2>(iter) <= *get<0>(iter))
+        if(*psd::get<0>(iter) < *psd::get<1>(iter) || *psd::get<2>(iter) <= *psd::get<0>(iter))
             return vacant_;
     }
     return container(id);
